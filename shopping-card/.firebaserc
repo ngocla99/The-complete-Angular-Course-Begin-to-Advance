@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "organic-shop-6f604": {
+      "hosting": {
+        "shopping-card": [
+          "organic-shop-6f604"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "organic-shop-6f604"
+  }
+}
