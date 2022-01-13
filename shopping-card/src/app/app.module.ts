@@ -21,6 +21,13 @@ import { ShippingFormComponent } from './shopping/components/shipping-form/shipp
 import { ShoppingCartSummaryComponent } from './shopping/components/shopping-cart-summary/shopping-cart-summary.component';
 import { LoginComponent } from './core/components/login/login.component';
 import { CheckOutComponent } from './shopping/components/check-out/check-out.component';
+import { ProductFormComponent } from './admin/components/product-form/product-form.component';
+import { FormsModule } from '@angular/forms';
+import { CustomFormsModule } from 'ngx-custom-validators';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -37,14 +44,21 @@ import { CheckOutComponent } from './shopping/components/check-out/check-out.com
     ShoppingCartSummaryComponent,
     LoginComponent,
     CheckOutComponent,
+    ProductFormComponent,
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AngularFirestoreModule,
+    CustomFormsModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

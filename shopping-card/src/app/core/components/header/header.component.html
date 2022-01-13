@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
   <div class="container-fluid">
     <a class="navbar-brand" routerLink="/">O</a>
     <button
@@ -35,7 +35,7 @@
           </li>
         </ng-template>
         <li
-          *ngIf="auth.user$ | async as user; else anonymousUser"
+          *ngIf="appUser as user; else anonymousUser"
           class="nav-item dropdown"
         >
           <a
@@ -45,23 +45,32 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            {{ user?.displayName || "Username" }}
+            {{ user?.name || "Username" }}
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <li>
               <a class="dropdown-item" routerLink="/my/orders">My Orders</a>
             </li>
+            <ng-container *ngIf="user.isAdmin">
+              <li>
+                <a class="dropdown-item" routerLink="/admin/orders"
+                  >Manage Orders</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/admin/products"
+                  >Manage Products</a
+                >
+              </li>
+            </ng-container>
             <li>
-              <a class="dropdown-item" routerLink="/admin/orders"
-                >Manage Orders</a
+              <a
+                class="dropdown-item"
+                style="cursor: pointer"
+                (click)="onLogout()"
+                >Log Out</a
               >
             </li>
-            <li>
-              <a class="dropdown-item" routerLink="/admin/products"
-                >Manage Products</a
-              >
-            </li>
-            <li><a class="dropdown-item" (click)="onLogout()">Log Out</a></li>
           </ul>
         </li>
       </ul>

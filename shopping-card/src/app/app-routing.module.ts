@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminOrdersComponent } from './admin/components/admin-orders/admin-orders.component';
 import { AdminProductsComponent } from './admin/components/admin-products/admin-products.component';
+import { ProductFormComponent } from './admin/components/product-form/product-form.component';
 import { HomeComponent } from './core/components/home/home.component';
 import { LoginComponent } from './core/components/login/login.component';
 import { AdminAuthGuardService } from './shared/services/admin-auth-guard.service';
@@ -37,6 +38,16 @@ const routes: Routes = [
   {
     path: 'admin/products',
     component: AdminProductsComponent,
+    canActivate: [AuthGuardService, AdminAuthGuardService],
+  },
+  {
+    path: 'admin/products/new',
+    component: ProductFormComponent,
+    canActivate: [AuthGuardService, AdminAuthGuardService],
+  },
+  {
+    path: 'admin/products/:id',
+    component: ProductFormComponent,
     canActivate: [AuthGuardService, AdminAuthGuardService],
   },
   {

@@ -1,0 +1,107 @@
+<div class="row">
+  <div class="col-md-6">
+    <form #f="ngForm" (ngSubmit)="onSave(f.value)">
+      <div class="mb-3">
+        <label for="title" class="form-label">Tittle</label>
+        <input
+          #title="ngModel"
+          [ngModel]="product?.title"
+          (ngModelChange)="product.title = $event"
+          name="title"
+          type="text"
+          class="form-control"
+          id="title"
+          required
+        />
+        <div class="alert alert-danger" *ngIf="title.touched && title.invalid">
+          Tittle is required!
+        </div>
+      </div>
+      <label for="price" class="form-label">Price</label>
+      <div class="input-group mb-3">
+        <span class="input-group-text">$</span>
+        <input
+          #price="ngModel"
+          [ngModel]="product?.price"
+          (ngModelChange)="product.price = $event"
+          name="price"
+          type="text"
+          class="form-control"
+          id="price"
+          required
+          [min]="0"
+        />
+      </div>
+      <div class="alert alert-danger" *ngIf="price.touched && price.invalid">
+        <div *ngIf="price.errors?.required">Price is required!</div>
+        <div *ngIf="price.errors?.min">Price should be 0 or higher!</div>
+      </div>
+      <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <select
+          #category="ngModel"
+          [ngModel]="product?.category"
+          (ngModelChange)="product.category = $event"
+          name="category"
+          id="category"
+          class="form-select"
+          required
+        >
+          <option
+            [value]="category.payload.doc.id"
+            *ngFor="let category of categories$ | async"
+          >
+            {{ category.payload.doc.data().name }}
+          </option>
+        </select>
+        <div
+          class="alert alert-danger"
+          *ngIf="category.touched && category.invalid"
+        >
+          Category is required!
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="imageUrl" class="form-label">Image URL</label>
+        <input
+          #imageUrl="ngModel"
+          [ngModel]="product?.imageUrl"
+          (ngModelChange)="product.imageUrl = $event"
+          name="imageUrl"
+          type="text"
+          class="form-control"
+          id="imageUrl"
+          required
+          url
+        />
+        <div
+          class="alert alert-danger"
+          *ngIf="imageUrl.touched && imageUrl.invalid"
+        >
+          <div *ngIf="imageUrl.errors?.required">Image URL is required!</div>
+          <div *ngIf="imageUrl.errors?.url">Please enter a valid URL!</div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary me-3">Save</button>
+      <button
+        *ngIf="product?.title"
+        type="button"
+        (click)="onDelete()"
+        class="btn btn-danger"
+      >
+        Delete
+      </button>
+    </form>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <img [src]="product?.imageUrl" class="card-img-top" />
+      <div class="card-body">
+        <h5 class="card-title">{{ product?.title }}</h5>
+        <p class="card-text">
+          {{ product?.price | currency }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
