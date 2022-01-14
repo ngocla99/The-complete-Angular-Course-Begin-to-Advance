@@ -1,0 +1,22 @@
+<div class="position-sticky">
+  <ul class="list-group">
+    <li
+      class="list-group-item"
+      routerLink="/"
+      [class.active]="!categoryId"
+      style="cursor: pointer"
+    >
+      All Categories
+    </li>
+    <li
+      *ngFor="let category of categories$ | async"
+      class="list-group-item"
+      routerLink="/"
+      [queryParams]="{ category: category.id }"
+      [class.active]="categoryId === category.id"
+      style="cursor: pointer"
+    >
+      {{ category.name }}
+    </li>
+  </ul>
+</div>

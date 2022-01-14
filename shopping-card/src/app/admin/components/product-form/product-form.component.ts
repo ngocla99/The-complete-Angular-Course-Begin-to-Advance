@@ -22,7 +22,7 @@ export class ProductFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.categories$ = this.categoriesService.getCategories();
+    this.categories$ = this.categoriesService.getAll();
 
     this.id = this.route.snapshot.params['id'];
     if (this.id)

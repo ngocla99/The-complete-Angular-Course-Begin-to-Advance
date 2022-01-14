@@ -14,7 +14,7 @@ import { ProductsComponent } from './shopping/components/products/products.compo
 import { ShoppingCardComponent } from './shopping/components/shopping-card/shopping-card.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: ProductsComponent },
   { path: 'products', component: ProductsComponent },
   { path: 'shopping-cart', component: ShoppingCardComponent },
   { path: 'login', component: LoginComponent },

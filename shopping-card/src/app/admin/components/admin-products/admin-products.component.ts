@@ -31,24 +31,11 @@ export class AdminProductsComponent
   constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
-    this.subscription = this.productService
-      .getAll()
-      .pipe(
-        map((response: any[]) =>
-          response.map((data, i) => {
-            return {
-              position: i + 1,
-              id: data.payload.doc.id,
-              ...data.payload.doc.data(),
-            };
-          })
-        )
-      )
-      .subscribe((products) => {
-        this.dataSource = new MatTableDataSource(products);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-      });
+    this.subscription = this.productService.getAll().subscribe((products) => {
+      this.dataSource = new MatTableDataSource(products);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    });
   }
 
   ngAfterViewInit() {
