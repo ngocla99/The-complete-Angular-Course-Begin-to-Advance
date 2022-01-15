@@ -33,6 +33,6 @@ export class ShoppingCartService {
 
     let item$ = this.db.collection('shopping-carts').doc(cartId);
 
-    // item$.take(1).subscribe(item);
+    item$.take(1).subscribe(item);
   }
 }
