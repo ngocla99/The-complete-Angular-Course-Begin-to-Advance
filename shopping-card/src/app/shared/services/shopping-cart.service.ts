@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { take } from 'rxjs/operators';
 import { Product } from '../models/product.model';
 
 @Injectable({
@@ -14,11 +15,18 @@ export class ShoppingCartService {
       .add({ dateCreated: new Date().getTime() });
   }
 
-  private getCart(cartId: string) {
+  async getCart() {
+    const cartId = await this.getOrCreateCartId();
     return this.db.collection('shopping-carts').doc(cartId).valueChanges();
   }
 
-  private async getOrCreateCart() {
+  private getItem(cartId: string, productId: any) {
+    return this.db
+      .collection('shopping-carts')
+      .doc(cartId + '/items/' + productId);
+  }
+
+  private async getOrCreateCartId(): Promise<string> {
     let cartId = localStorage.getItem('cartId');
     if (cartId) return cartId;
 
@@ -29,10 +37,17 @@ export class ShoppingCartService {
   }
 
   async addToCart(product: Product) {
-    let cartId = await this.getOrCreateCart();
+    let cartId = await this.getOrCreateCartId();
 
-    let item$ = this.db.collection('shopping-carts').doc(cartId);
+    console.log(cartId, product.id);
+    let item$ = this.getItem(cartId, product.id);
 
-    item$.take(1).subscribe(item);
+    item$
+      .valueChanges()
+      .pipe(take(1))
+      .subscribe((item: any) => {
+        if (item) item$.update({ quantity: item.quantity + 1 });
+        else item$.set({ product: product, quantity: 1 });
+      });
   }
 }
