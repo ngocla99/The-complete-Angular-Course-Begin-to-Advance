@@ -23,7 +23,7 @@ export class ProductCardComponent implements OnInit {
     if (!this.shoppingCart) return 0;
     // let item = this.shoppingCart.items[this.product.id];
     let item;
-    // return item ? item.quantity : 0;
-    return 0;
+    return item ? item : 0;
+    // return 0;
   }
 }
